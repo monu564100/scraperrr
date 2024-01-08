@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website For Scrap</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #001f3f, #00bfff);
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            position: relative;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .animatedCartoon {
+            max-width: 300px;
+            height: auto;
+            margin-top: 30px;
+            animation: bounce 1s infinite alternate;
+            cursor: pointer;
+        }
+
+        @keyframes bounce {
+            to {
+                transform: translateY(-10px);
+            }
+        }
+
+        .quote {
+            font-style: italic;
+            margin-top: 20px;
+        }
+
+        /* Animated Button */
+        button {
+            background-color: #4CAF50;
+            color: #ffffff;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+        }
+    </style>
+    <script>
+        function goToNextPage(product, imagePath) {
+            sessionStorage.setItem('selectedProduct', product);
+            sessionStorage.setItem('scrapImage', imagePath);
+            document.querySelector('.container').style.animation = 'fadeOut 1s forwards';
+            setTimeout(function () {
+                window.location.href = 'nextPage.html';
+            }, 1000);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="small3DShape"></div>
+        <h1>Sell Scrap And Earn Money</h1>
+        <hr color="red">
+
+        <!-- Paper Scrap -->
+        <div>
+            <img src="paper_cartoon.jpg" alt="Paper Cartoon" class="animatedCartoon" onclick="goToNextPage('Paper', 'paper_cartoon.jpg')">
+            <br>
+            <button onclick="goToNextPage('Paper', 'paper_cartoon.jpg')">Sell Paper Scrap</button>
+        </div>
+
+        <!-- Old Cloth Scrap -->
+        <div>
+            <img src="cloth_cartoon.jpg" alt="Cloth Cartoon" class="animatedCartoon" onclick="goToNextPage('OldCloth', 'cloth_cartoon.jpg')">
+            <br>
+            <button onclick="goToNextPage('OldCloth', 'cloth_cartoon.jpg')">Sell Old Cloth Scrap</button>
+        </div>
+
+        <!-- Plastic Scrap -->
+        <div>
+            <img src="plastic_cartoon.jpg" alt="Plastic Cartoon" class="animatedCartoon" onclick="goToNextPage('Plastic', 'plastic_cartoon.jpg')">
+            <br>
+            <button onclick="goToNextPage('Plastic', 'plastic_cartoon.jpg')">Sell Plastic Scrap</button>
+        </div>
+
+        <!-- E-Scrap -->
+        <div>
+            <img src="escrap_cartoon.jpg" alt="E-Scrap Cartoon" class="animatedCartoon" onclick="goToNextPage('EScrap', 'escrap_cartoon.jpg')">
+            <br>
+            <button onclick="goToNextPage('EScrap', 'escrap_cartoon.jpg')">Sell E-Scrap</button>
+        </div>
+
+        <!-- Metal Scrap -->
+        <div>
+            <img src="metal_cartoon.jpg" alt="Metal Cartoon" class="animatedCartoon" onclick="goToNextPage('Metal', 'metal_cartoon.jpg')">
+            <br>
+            <button onclick="goToNextPage('Metal', 'metal_cartoon.jpg')">Sell Metal Scrap</button>
+        </div>
+
+        <!-- Donate Old Books, Clothes, Charity -->
+        <div>
+            <img src="donate_cartoon.png" alt="Donate Cartoon" class="animatedCartoon" onclick="goToNextPage('Donate', 'donate_cartoon.jpg')">
+            <br>
+            <button onclick="goToNextPage('Donate', 'donate_cartoon.jpg')">Donate Old Books, Clothes, Charity</button>
+        </div>
+
+        <div class="quote">
+            <p>Recycling is an investment in the future we all share.</p>
+            <p>Every piece of recycled material makes a difference.</p>
+        </div>
+    </div>
+</body>
+</html>

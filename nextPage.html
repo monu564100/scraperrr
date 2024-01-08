@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Details</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #001f3f, #00bfff);
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            position: relative;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        label {
+            margin-top: 10px;
+        }
+
+        input, button {
+            margin-top: 5px;
+        }
+
+        img {
+            max-width: 300px;
+            height: auto;
+            margin-top: 30px;
+            border-radius: 10px;
+        }
+
+        /* Animated Button */
+        button {
+            background-color: #4CAF50;
+            color: #ffffff;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Previous Sells Section */
+        #previousSells {
+            margin-top: 30px;
+        }
+
+        #previousSells table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        #previousSells table, #previousSells th, #previousSells td {
+            border: 1px solid #ffffff;
+        }
+
+        #previousSells th, #previousSells td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="small3DShape"></div>
+        <h1>Enter Details</h1>
+        <hr color="red">
+
+        <h2>Product: <span id="selectedProduct"></span></h2>
+
+        <form id="pickupForm">
+            <label for="scrapPhoto">Scrap Photo:</label>
+            <img src="" alt="Scrap Photo" id="scrapPhoto">
+
+            <label for="username">Your Name:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required>
+            <small>Format: 1234567890</small>
+
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" required>
+
+            <label for="pincode">Pincode:</label>
+            <input type="text" id="pincode" name="pincode" required>
+
+            <label for="weight">Weight of Scrap:</label>
+            <input type="number" id="weight" name="weight" min="5" max="10000" step="1" required>
+
+            <label for="pickupDate">Preferred Pickup Date:</label>
+            <input type="date" id="pickupDate" name="pickupDate" min="" required>
+
+            <button type="button" onclick="validateAndSchedule()">Schedule Pickup</button>
+        </form>
+
+        <!-- Previous Sells Section -->
+        <div id="previousSells">
+            <h2>Previous Sells</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Weight</th>
+                        <th>Scrap Photo</th>
+                    </tr>
+                </thead>
+                <tbody id="previousSellsBody"></tbody>
+            </table>
+        </div>
+
+        <script>
+            var selectedProduct = sessionStorage.getItem('selectedProduct');
+            document.getElementById('selectedProduct').innerText = selectedProduct;
+
+            // Set default pickup date as 2 days later from today
+            var today = new Date();
+            today.setDate(today.getDate() + 2);
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+
+            var formattedDate = yyyy + '-' + mm + '-' + dd;
+            document.getElementById('pickupDate').min = formattedDate;
+            document.getElementById('pickupDate').value = formattedDate;
+
+            // Set scrap photo from sessionStorage
+            var scrapImage = sessionStorage.getItem('scrapImage');
+            document.getElementById('scrapPhoto').src = scrapImage;
+
+            // Function to validate and schedule pickup
+            function validateAndSchedule() {
+                var form = document.getElementById('pickupForm');
+                var isValid = form.checkValidity();
+
+                if (isValid) {
+                    // Store details in Previous Sells
+                    storePreviousSell();
+
+                    // Send details to the dealer's email
+                    sendToDealerEmail();
+
+                    alert('Pickup scheduled successfully!');
+                } else {
+                    alert('Please fill in all details before scheduling pickup.');
+                }
+            }
+
+            // Function to store details in Previous Sells
+            function storePreviousSell() {
+                var username = document.getElementById('username').value;
+                var weight = document.getElementById('weight').value;
+
+                // Create a new row in the table
+                var table = document.getElementById('previousSellsBody');
+                var row = table.insertRow();
+
+                // Insert cells with data
+                var cell1 = row.insertCell(0);
+                cell1.innerText = selectedProduct;
+
+                var cell2 = row.insertCell(1);
+                cell2.innerText = weight;
+
+                var cell3 = row.insertCell(2);
+                cell3.innerHTML = '<img src="' + scrapImage + '" alt="Scrap Photo" style="max-width: 50px; height: auto;">';
+            }
+
+            // Function to send details to dealer's email
+            function sendToDealerEmail() {
+                var username = document.getElementById('username').value;
+                var phone = document.getElementById('phone').value;
+                var address = document.getElementById('address').value;
+                var weight = document.getElementById('weight').value;
+
+                // Call your server-side script to send an email with the collected details
+                // You'll need to replace 'your-server-endpoint' with the actual endpoint on your server
+                var endpoint = 'http://localhost:3000/send-email';
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', endpoint, true);
+                xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+
+                var data = {
+                    username: username,
+                    phone: phone,
+                    address: address,
+                    weight: weight,
+                    product: selectedProduct
+                };
+
+                xhr.send(JSON.stringify(data));
+            }
+        </script>
+    </div>
+</body>
+</html>

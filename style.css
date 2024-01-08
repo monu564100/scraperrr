@@ -1,0 +1,46 @@
+body {
+    background-color: #0a0a0a; /* Neon background color */
+    color: #ffffff; /* Neon text color */
+    font-family: 'Arial', sans-serif; /* Use a suitable font-family for your text */
+    margin: 0;
+    position: relative; /* Set position relative for absolute positioning of the 3D shape */
+}
+
+.container {
+    text-align: center;
+    padding: 20px;
+    opacity: 0; /* Initially set opacity to 0 for the fade-in effect */
+    animation: fadeIn 1s forwards; /* Apply the fade-in animation */
+    position: relative; /* Set position relative for absolute positioning of the 3D shape */
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative; /* Set position relative for absolute positioning of the 3D shape */
+}
+
+.small3DShape {
+    position: absolute;
+    top: 10px; /* Adjust the top position as needed */
+    right: 10px; /* Adjust the right position as needed */
+    width: 10px;
+    height: 10px;
+    background-color: #ff00ff; /* Neon color for the 3D shape */
+    transform: rotateX(45deg) rotateY(45deg); /* Apply 3D rotation */
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.8); /* Adds a subtle glow to the 3D shape */
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 20px;
+    border-radius: 10px;
+}

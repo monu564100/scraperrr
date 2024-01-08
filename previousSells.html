@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Previous Sells</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #001f3f, #00bfff); /* Gradient background */
+            color: #ffffff; /* Text color */
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .previousItems {
+            max-width: 400px;
+            margin: 20px auto;
+            border: 1px solid #fff;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .animatedButton {
+            background-color: #4CAF50; /* Green background color */
+            color: #ffffff; /* White text color */
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out; /* Add transition for smooth scaling */
+        }
+
+        .animatedButton:hover {
+            transform: scale(1.1); /* Scale the button on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Previous Sells</h1>
+        <hr color="red">
+
+        <div class="previousItems">
+            <!-- Display previous sells or scheduled items here -->
+            <!-- You can use JavaScript to fetch and display the user's previous sells -->
+            <p>No previous sells found.</p>
+        </div>
+
+        <a href="index.html" class="animatedButton">Go Back</a>
+    </div>
+</body>
+</html>
